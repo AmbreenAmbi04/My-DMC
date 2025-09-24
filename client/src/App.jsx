@@ -11,7 +11,12 @@ import AssignmentManagement from "./pages/AssignmentManagement";
 
 const App = () => {
   return (
-    <Router>
+    <Router
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true
+      }}
+    >
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/operator-management" element={<OperatorManagement />} />
