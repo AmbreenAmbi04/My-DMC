@@ -8,7 +8,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
 // REGISTER
 router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   // Check if user exists
   db.query("SELECT * FROM users WHERE email = ?", [email], async (err, result) => {
@@ -19,8 +19,8 @@ router.post("/register", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert new user
-    db.query("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-      [name, email, hashedPassword],
+    db.query("INSERT INTO users (email, password) VALUES (?, ?)",
+      [email, hashedPassword],
       (err, result) => {
         if (err) return res.status(500).json({ error: err });
         res.json({ msg: "User registered successfully" });

@@ -10,10 +10,19 @@ import {
   FileText, 
   LogOut 
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const SideBar = ({ isOpen, onClose }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+    onClose();
+  };
 
   const navigationItems = [
     { path: "/", label: "Dashboard", icon: Check },
@@ -77,7 +86,10 @@ const SideBar = ({ isOpen, onClose }) => {
         
         {/* Logout at bottom */}
         <div className="p-3">
-          <div className="d-flex align-items-center text-danger p-3 rounded-3 hover-bg-light cursor-pointer" onClick={onClose}>
+          <div 
+            className="d-flex align-items-center text-danger p-3 rounded-3 hover-bg-light cursor-pointer" 
+            onClick={handleLogout}
+          >
             <LogOut size={20} className="me-3" />
             <span>Logout</span>
           </div>
